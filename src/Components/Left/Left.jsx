@@ -69,3 +69,5 @@ Left.propTypes = {
 };
 
 export default Left;
+//this project was made through effort and endurance. It is
+//not completed but it is 80% done
