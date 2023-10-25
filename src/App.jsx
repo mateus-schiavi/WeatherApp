@@ -4,16 +4,13 @@ import Right from './Components/Right/Right';
 
 function App() {
   const [weatherData, setWeatherData] = useState(null);
-  const [forecastData, setForecastData] = useState(null); // New state for forecast data
+  const [forecastData, setForecastData] = useState(null);
   const [searchCity, setSearchCity] = useState('Suzano');
-  const apiKey = 'c1277f4e6d7046dbf52a8b0a2f86a1b1'; // Replace with your API key
-  const apiKey2 = '4e953b5fbb8c2fc08be901d59abea176';
-  useEffect(() => {
-    // Fetch current weather data
-    const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${searchCity}&appid=${apiKey}&units=metric`;
+  const apiKey = '9173b14f8f0405e63830c31b389b0bc0'; // Replace with your API key
 
-    
-    const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${searchCity}&appid=${apiKey2}&units=metric`;
+  useEffect(() => {
+    const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${searchCity}&appid=${apiKey}&units=metric`;
+    const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${searchCity}&appid=${apiKey}&units=metric`;
 
     const fetchData = async () => {
       try {
@@ -49,7 +46,7 @@ function App() {
         searchCity={searchCity}
         setSearchCity={setSearchCity}
       />
-      <Right weatherData={weatherData} forecastData={forecastData} /> {/* Pass forecastData to the Right component */}
+      <Right weatherData={weatherData} forecastData={forecastData} />
     </div>
   );
 }
