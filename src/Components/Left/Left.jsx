@@ -19,8 +19,7 @@ function Left({ weatherData, searchCity, setSearchCity }) {
                         <input
                             type="text"
                             placeholder='Search for places'
-                            value={newCity}
-                            onChange={(e) => setNewCity(e.target.value)}
+                            onChange={(e) => setSearchCity(e.target.value)}
                         />
                         <button onClick={handleSearch}>Search</button>
                     </div>

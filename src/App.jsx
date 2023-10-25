@@ -7,7 +7,7 @@ function App() {
   const [forecastData, setForecastData] = useState(null);
   const [forecastDataFiveDays, setForecastDataFiveDays] = useState(null);
   const [searchCity, setSearchCity] = useState('Suzano');
-  const apiKey = '9173b14f8f0405e63830c31b389b0bc0'; // Replace with your API key
+  const apiKey = 'b2c5a889695347dc4dc2328d28e4a837'; // Replace 'YOUR_API_KEY' with your actual OpenWeatherMap API key
 
   useEffect(() => {
     const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${searchCity}&appid=${apiKey}&units=metric`;
@@ -55,7 +55,7 @@ function App() {
       <Right
         weatherData={weatherData}
         forecastData={forecastData}
-        forecastDataFiveDays={forecastDataFiveDays} // Pass the new state to the Right component
+        forecastDataFiveDays={forecastDataFiveDays}
       />
     </div>
   );

@@ -67,7 +67,7 @@ function Right({ weatherData, forecastData }) {
           <div className='info-box wind-status'>
             <h3>Wind Status</h3>
             <p>{weatherData.wind.speed} mph</p>
-            <FontAwesomeIcon icon={faArrowUp} rotation={weatherData.wind.deg} />
+            <FontAwesomeIcon icon={faArrowUp} rotation={weatherData.wind.deg === 0 ? 0 : (Math.round(weatherData.wind.deg / 90) * 90)} />
             {getWindDirection(weatherData.wind.deg)}
           </div>
           <div className='info-box humidity'>
