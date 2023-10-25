@@ -4,26 +4,38 @@ import Right from './Components/Right/Right';
 
 function App() {
   const [weatherData, setWeatherData] = useState(null);
+  const [forecastData, setForecastData] = useState(null); // New state for forecast data
   const [searchCity, setSearchCity] = useState('Suzano');
-  const apiKey = '4e953b5fbb8c2fc08be901d59abea176';
-
+  const apiKey = 'c1277f4e6d7046dbf52a8b0a2f86a1b1'; // Replace with your API key
+  const apiKey2 = '4e953b5fbb8c2fc08be901d59abea176';
   useEffect(() => {
-    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${searchCity}&appid=${apiKey}&units=metric`;
+    // Fetch current weather data
+    const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${searchCity}&appid=${apiKey}&units=metric`;
+
+    
+    const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${searchCity}&appid=${apiKey2}&units=metric`;
 
     const fetchData = async () => {
       try {
-        const response = await fetch(apiUrl);
+        const [currentResponse, forecastResponse] = await Promise.all([
+          fetch(currentWeatherUrl),
+          fetch(forecastUrl),
+        ]);
 
-        if (response.ok) {
-          const data = await response.json();
-          setWeatherData(data);
+        if (currentResponse.ok && forecastResponse.ok) {
+          const currentData = await currentResponse.json();
+          const forecastData = await forecastResponse.json();
 
-          console.log('Dados da cidade pesquisada:', data);
+          setWeatherData(currentData);
+          setForecastData(forecastData);
+
+          console.log('Current Weather Data:', currentData);
+          console.log('Forecast Data:', forecastData);
         } else {
-          console.error('Erro na resposta da API');
+          console.error('Error in API response');
         }
       } catch (error) {
-        console.error('Erro ao buscar dados da API', error);
+        console.error('Error fetching data from the API', error);
       }
     };
 
@@ -37,7 +49,7 @@ function App() {
         searchCity={searchCity}
         setSearchCity={setSearchCity}
       />
-      <Right weatherData={weatherData} />
+      <Right weatherData={weatherData} forecastData={forecastData} /> {/* Pass forecastData to the Right component */}
     </div>
   );
 }
