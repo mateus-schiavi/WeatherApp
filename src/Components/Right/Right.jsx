@@ -15,13 +15,11 @@ const windDirectionMap = {
     315: 'NW',
 };
 
-function Right({ weatherData }) {
-    if (!weatherData) {
-
+function Right({ weatherData, forecastData }) {
+    if (!weatherData || !forecastData) {
         return (
             <div className='right-container'>
                 <p>Loading...</p>
-                {/* Outros elementos de interface de usuário padrão */}
             </div>
         );
     }
@@ -33,11 +31,40 @@ function Right({ weatherData }) {
         return windDirectionMap[closestDirection];
     };
 
+    const today = new Date();
+    const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const currentDay = today.getDay();
+
+    // Filter daily forecasts for the next five days
+    const dailyForecasts = forecastData.list.filter((forecast, index) => index % 8 === 0);
+
     return (
         <div className='right-container'>
             <div className='temperature-buttons'>
                 <button className='button-celsius'>°C</button>
                 <button className='button-fahrenheit'>°F</button>
+            </div>
+            <div className='weather-images'>
+                {dailyForecasts.map((dayData, index) => {
+
+                    const { temp_max: maxTemp, temp_min: minTemp } = dayData.main;
+
+                    // Calculate the date from the forecast data
+                    const forecastDate = new Date(dayData.dt * 1000); // Convert seconds to milliseconds
+
+                    const dayName = index === 0 ? 'Today' : dayNames[(currentDay + index) % 7];
+
+                    return (
+                        <div key={index} className='day-forecast'>
+                            <p>{dayName}</p>
+                            <img src={`https://openweathermap.org/img/wn/${dayData.weather[0].icon}.png`} alt={dayData.weather[0].description} />
+                            <div className='temperature-info'>
+                                <p>Max: {maxTemp.toFixed(0)}°C</p>
+                                <p>Min: {minTemp.toFixed(0)}°C</p>
+                            </div>
+                        </div>
+                    );
+                })}
             </div>
             <div className='weather-container'>
                 <div className='weather-info'>
@@ -61,7 +88,6 @@ function Right({ weatherData }) {
                         <h3>Visibility</h3>
                         <p>{(weatherData.visibility / 1609.34).toFixed(2)} miles</p>
                     </div>
-
                     <div className='info-box air-pressure'>
                         <h3>Air Pressure</h3>
                         <p>{weatherData.main.pressure} mb</p>
@@ -71,8 +97,10 @@ function Right({ weatherData }) {
         </div>
     );
 }
+
 Right.propTypes = {
     weatherData: PropTypes.object,
+    forecastData: PropTypes.object,
 };
 
 export default Right;

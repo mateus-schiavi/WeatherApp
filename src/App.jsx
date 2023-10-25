@@ -4,24 +4,35 @@ import Right from './Components/Right/Right';
 
 function App() {
   const [weatherData, setWeatherData] = useState(null);
-  const [searchCity, setSearchCity] = useState('Helsinki');
-  const apiKey = '4e953b5fbb8c2fc08be901d59abea176';
+  const [forecastData, setForecastData] = useState(null);
+  const [searchCity, setSearchCity] = useState('Suzano');
+  const apiKey = '9173b14f8f0405e63830c31b389b0bc0'; // Replace with your API key
 
   useEffect(() => {
-    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${searchCity}&appid=${apiKey}&units=metric`;
+    const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${searchCity}&appid=${apiKey}&units=metric`;
+    const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${searchCity}&appid=${apiKey}&units=metric`;
 
     const fetchData = async () => {
       try {
-        const response = await fetch(apiUrl);
+        const [currentResponse, forecastResponse] = await Promise.all([
+          fetch(currentWeatherUrl),
+          fetch(forecastUrl),
+        ]);
 
-        if (response.ok) {
-          const data = await response.json();
-          setWeatherData(data);
+        if (currentResponse.ok && forecastResponse.ok) {
+          const currentData = await currentResponse.json();
+          const forecastData = await forecastResponse.json();
+
+          setWeatherData(currentData);
+          setForecastData(forecastData);
+
+          console.log('Current Weather Data:', currentData);
+          console.log('Forecast Data:', forecastData);
         } else {
-          console.error('Erro na resposta da API');
+          console.error('Error in API response');
         }
       } catch (error) {
-        console.error('Erro ao buscar dados da API', error);
+        console.error('Error fetching data from the API', error);
       }
     };
 
@@ -35,7 +46,7 @@ function App() {
         searchCity={searchCity}
         setSearchCity={setSearchCity}
       />
-      <Right weatherData={weatherData} />
+      <Right weatherData={weatherData} forecastData={forecastData} />
     </div>
   );
 }
