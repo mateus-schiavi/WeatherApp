@@ -4,7 +4,7 @@ import Right from './Components/Right/Right';
 
 function App() {
   const [weatherData, setWeatherData] = useState(null);
-  const [searchCity, setSearchCity] = useState('Helsinki');
+  const [searchCity, setSearchCity] = useState('Suzano');
   const apiKey = '4e953b5fbb8c2fc08be901d59abea176';
 
   useEffect(() => {
@@ -17,6 +17,8 @@ function App() {
         if (response.ok) {
           const data = await response.json();
           setWeatherData(data);
+
+          console.log('Dados da cidade pesquisada:', data);
         } else {
           console.error('Erro na resposta da API');
         }
