@@ -27,7 +27,6 @@ function Left({ weatherData, searchCity, setSearchCity }) {
                     <div>
                         <p>Loading...</p>
                     </div>
-                    {/* Outros elementos de interface de usuário padrão */}
                 </div>
             </div>
         );
