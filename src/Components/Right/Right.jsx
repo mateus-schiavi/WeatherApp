@@ -47,8 +47,8 @@ function Right({ weatherData, forecastData }) {
       <div className='weather-images'>
         {dailyForecasts.map((dayData, index) => {
           console.log(dayData);
-          const { temp_max, temp_min } = dayData.main; // Use 'temp_max' and 'temp_min'
-          const forecastDate = new Date(dayData.dt * 1000); // Convert seconds to milliseconds
+          const { temp_max, temp_min } = dayData.main; 
+          const forecastDate = new Date(dayData.dt * 1000);
           const dayName = index === 0 ? 'Tomorrow' : dayNames[(currentDay + index) % 7];
           const weatherDescription = dayData.weather[0].description;
           return (
