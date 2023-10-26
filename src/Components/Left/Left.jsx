@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import './Left.css';
 import PropTypes from 'prop-types';
+import { addDays, format, getMonth } from 'date-fns';
+
 function Left({ weatherData, searchCity, setSearchCity }) {
-    
     const [newCity, setNewCity] = useState('');
+    const tomorrow = addDays(new Date(), 1);
+    const today = new Date(); // Adicione isso para obter a data atual
 
     const handleSearch = async () => {
         if (newCity.trim() !== '') {
@@ -51,9 +54,14 @@ function Left({ weatherData, searchCity, setSearchCity }) {
                 <div>
                     <span className='temperature'><h2>{Math.round(weatherData.main.temp)}°C</h2></span>
                 </div>
+                <div className='description'>
+                    <p>{weatherData.weather[0].description}</p>
+                </div>
                 <div className='place'>
-                    <span>{new Date(weatherData.dt * 1000).toDateString()}, </span>
-                    <span>{weatherData.name}</span>
+                    <div className='date'>
+                       Today {format(today, 'MMM d')} {/* Formate a data atual como Mês e Dia */}
+                    </div>
+                    <div className='city'>{weatherData.name}</div>
                 </div>
             </div>
         </div>
@@ -67,5 +75,3 @@ Left.propTypes = {
 };
 
 export default Left;
-//this project was made through effort and endurance. It is
-//not completed but it is 80% done

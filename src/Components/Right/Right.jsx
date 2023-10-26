@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Right.css';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -23,6 +23,16 @@ function Right({ weatherData, forecastData }) {
       </div>
     );
   }
+  const [isCelsius, setIsCelsius] = useState(true);
+
+  const handleCelsiusClick = () => {
+    setIsCelsius(true);
+  };
+
+  const handleFahrenheitClick = () => {
+    setIsCelsius(false);
+  };
+
 
   const getWindDirection = (degrees) => {
     const closestDirection = Object.keys(windDirectionMap).reduce((prev, curr) =>
@@ -35,35 +45,46 @@ function Right({ weatherData, forecastData }) {
   const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   let currentDay = today.getDay() + 1;
 
-  // Filter daily forecasts for the next five days
-  const dailyForecasts = forecastData.list.filter((forecast, index) => index % 8 === 0);
+  const [dailyForecasts, setDailyForecasts] = useState([]);
+
+  useEffect(() => {
+    if (forecastData && forecastData.list) {
+      // Filter daily forecasts for the next five days
+      const nextFiveDays = forecastData.list.filter((dayData, index) => index < 5);
+
+      // Update the dailyForecasts state
+      setDailyForecasts(nextFiveDays);
+    }
+  }, [forecastData]);
 
   return (
     <div className='right-container'>
       <div className='temperature-buttons'>
-        <button className='button-celsius'>°C</button>
-        <button className='button-fahrenheit'>°F</button>
+        <button className='button-celsius' onClick={handleCelsiusClick}>°C</button>
+        <button className='button-fahrenheit' onClick={handleFahrenheitClick}>°F</button>
       </div>
       <div className='weather-images'>
         {dailyForecasts.map((dayData, index) => {
-          console.log(dayData);
-          const { temp_max, temp_min } = dayData.main; 
+          const { temp_max, temp_min } = dayData.main;
           const forecastDate = new Date(dayData.dt * 1000);
-          const dayName = index === 0 ? 'Tomorrow' : dayNames[(currentDay + index) % 7];
+          const dayName = dayNames[(currentDay + index) % 7];
           const weatherDescription = dayData.weather[0].description;
+
+          const maxTempUnit = isCelsius ? '°C' : '°F';
+          const minTempUnit = isCelsius ? '°C' : '°F';
+
           return (
             <div key={index} className='day-forecast'>
               <p>{dayName}</p>
               <img src={`https://openweathermap.org/img/wn/${dayData.weather[0].icon}.png`} alt={dayData.weather[0].description} />
               <div className='temperature-info'>
                 <div>
-                  <p>Max: {temp_max.toFixed(0)}°C</p>
+                  <p>{temp_max.toFixed(0)}{maxTempUnit}</p>
                 </div>
                 <div>
-                  <p>Min: {temp_min.toFixed(0)}°C</p>
+                  <p> {temp_min.toFixed(0)}{minTempUnit}</p>
                 </div>
               </div>
-
             </div>
           );
         })}
@@ -103,6 +124,7 @@ function Right({ weatherData, forecastData }) {
 Right.propTypes = {
   weatherData: PropTypes.object,
   forecastData: PropTypes.object,
+  isCelsius: PropTypes.bool, // Change to bool since it represents a boolean value
 };
 
 export default Right;
