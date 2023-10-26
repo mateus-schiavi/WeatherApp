@@ -13,8 +13,16 @@
 }
 
 .place, .temperature {
-    color: white;
-    
+    color: white;    
+}
+
+.temperature {
+  color: #A09FB1;
+font-family: Raleway;
+font-size: 30px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
 }
 
 .image {
@@ -35,5 +43,27 @@
       opacity: 1;
     }
 }
+
+.description {
+  color: #A09FB1;
+text-align: center;
+font-family: Raleway;
+font-size: 20px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+}
   
-  
+.place {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Alinha no centro horizontalmente */
+}
+
+.date {
+  margin-bottom: 5px; /* Espaçamento entre a data e o nome da cidade */
+}
+
+.city {
+  /* Estilos para o nome da cidade, se necessário */
+}
