@@ -2,42 +2,54 @@ import React, { useState, useEffect } from 'react';
 import Left from './Components/Left/Left';
 import Right from './Components/Right/Right';
 
+const apiKey = '26ed082640d97b5f0061ec58b8c12cd6';
+
 function App() {
   const [weatherData, setWeatherData] = useState(null);
-  const [forecastData, setForecastData] = useState(null);
+  const [forecastData, setForecastData] = useState([]);
   const [searchCity, setSearchCity] = useState('Suzano');
-  const apiKey = '9173b14f8f0405e63830c31b389b0bc0'; // Replace with your API key
+  const [isCelsius, setIsCelsius] = useState(true);
 
   useEffect(() => {
-    const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${searchCity}&appid=${apiKey}&units=metric`;
-    const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${searchCity}&appid=${apiKey}&units=metric`;
-
-    const fetchData = async () => {
+    const fetchWeatherData = async () => {
       try {
-        const [currentResponse, forecastResponse] = await Promise.all([
-          fetch(currentWeatherUrl),
-          fetch(forecastUrl),
-        ]);
+        const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${searchCity}&appid=${apiKey}&units=metric`;
+        const currentResponse = await fetch(currentWeatherUrl);
 
-        if (currentResponse.ok && forecastResponse.ok) {
+        if (currentResponse.ok) {
           const currentData = await currentResponse.json();
-          const forecastData = await forecastResponse.json();
-
           setWeatherData(currentData);
-          setForecastData(forecastData);
-
           console.log('Current Weather Data:', currentData);
-          console.log('Forecast Data:', forecastData);
+
+          const { coord: { lat, lon } } = currentData;
+          fetchForecastData(lat, lon);
         } else {
-          console.error('Error in API response');
+          console.error('Error in current weather API response');
         }
       } catch (error) {
-        console.error('Error fetching data from the API', error);
+        console.error('Error fetching current weather data', error);
       }
     };
 
-    fetchData();
-  }, [searchCity, apiKey]);
+    const fetchForecastData = async (lat, lon) => {
+      try {
+        const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
+        const forecastResponse = await fetch(forecastUrl);
+    
+        if (forecastResponse.ok) {
+          const forecastData = await forecastResponse.json();
+          console.log('Forecast Data:', forecastData); // Log the data
+          setForecastData(forecastData);
+        } else {
+          console.error('Error in forecast API response');
+        }
+      } catch (error) {
+        console.error('Error fetching forecast data', error);
+      }
+    };
+
+    fetchWeatherData();
+  }, [searchCity]);
 
   return (
     <div>
@@ -46,7 +58,11 @@ function App() {
         searchCity={searchCity}
         setSearchCity={setSearchCity}
       />
-      <Right weatherData={weatherData} forecastData={forecastData} />
+      <Right
+        weatherData={weatherData}
+        forecastData={forecastData}
+        isCelsius={isCelsius}
+      />
     </div>
   );
 }

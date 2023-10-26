@@ -21,8 +21,8 @@
     color: white;
     display: flex;
     justify-content: space-between;
-    transform: translateY(80px);
-
+    transform: translateY(40px);
+    
 }
 
 .weather-info {
@@ -30,7 +30,7 @@
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    
+
   }
 
 
@@ -123,12 +123,12 @@
   
 .day-forecast {
     margin-right: 10px; /* Define a margem direita entre os elementos */
-    width: 150px;
+    width: 180px;
 
 }
 
 .day-forecast img {
-    width: 90%;
+    width: 60%;
     animation: pulse 0.8s alternate infinite;
 }
   
@@ -141,6 +141,93 @@
     margin-right: 10px;
 
 }
-.day-forecast img:hover {
-    transform: scale(1.1); 
+
+
+.day-forecast .temperature-info {
+    margin: 0; /* Remover a margem interna para evitar espaçamento extra */
+    font-size: 15px;
+    display: flex; /* Tornar o conteúdo um layout flexível */
+    justify-content: space-evenly; /* Adicionar espaço entre as temperaturas máxima e mínima */
+    align-items: center; /* Centralizar verticalmente os elementos filhos */
   }
+  
+  /* Adicione um estilo para espaçamento entre as temperaturas máxima e mínima */
+  .day-forecast .temperature-info > div {
+    margin: 0 5px; /* Adicione um espaçamento horizontal entre as temperaturas */
+  }
+
+.wind-status h3 {
+    color: #E7E7EB;
+text-align: center;
+font-family: Raleway;
+font-size: 16px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+}
+
+.wind-status p {
+    color: #E7E7EB;
+font-family: Raleway;
+font-size: 22px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}
+
+.visibility h3{
+    color: #E7E7EB;
+    text-align: center;
+    font-family: Raleway;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.visibility p {
+    color: #E7E7EB;
+    font-family: Raleway;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.humidity h3 {
+    color: #E7E7EB;
+    text-align: center;
+    font-family: Raleway;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.humidity p {
+    color: #E7E7EB;
+font-family: Raleway;
+font-size: 22px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}
+
+.air-pressure h3 {
+    color: #E7E7EB;
+    text-align: center;
+    font-family: Raleway;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.air-pressure p {
+    color: #E7E7EB;
+font-family: Raleway;
+font-size: 22px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}
