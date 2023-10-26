@@ -12,7 +12,7 @@ function App() {
   useEffect(() => {
     const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${searchCity}&appid=${apiKey}&units=metric`;
     const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${searchCity}&appid=${apiKey}&units=metric`;
-    const forecastUrlFiveDays = `https://api.openweathermap.org/data/2.5/forecast/daily?q=${searchCity}&appid=${apiKey}&units=metric&cnt=5`;
+    const forecastUrlFiveDays = `https://api.openweathermap.org/data/2.5/forecast?q=${searchCity}&appid=${apiKey}&units=metric&cnt=5`;
 
     const fetchData = async () => {
       try {

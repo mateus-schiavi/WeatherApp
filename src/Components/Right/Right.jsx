@@ -33,7 +33,7 @@ function Right({ weatherData, forecastData }) {
 
   const today = new Date();
   const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-  const currentDay = today.getDay();
+  let currentDay = today.getDay() + 1;
 
   // Filter daily forecasts for the next five days
   const dailyForecasts = forecastData.list.filter((forecast, index) => index % 8 === 0);
@@ -46,7 +46,8 @@ function Right({ weatherData, forecastData }) {
       </div>
       <div className='weather-images'>
         {dailyForecasts.map((dayData, index) => {
-          const { temp_max: temp_max, temp_min: temp_min } = dayData.main;
+          console.log(dayData);
+          const { temp_max, temp_min } = dayData.main;
           const forecastDate = new Date(dayData.dt * 1000); // Convert seconds to milliseconds
           const dayName = index === 0 ? 'Tomorrow' : dayNames[(currentDay + index) % 7];
           const weatherDescription = dayData.weather[0].description;
