@@ -47,7 +47,7 @@ function Right({ weatherData, forecastData }) {
       <div className='weather-images'>
         {dailyForecasts.map((dayData, index) => {
           console.log(dayData);
-          const { temp_max, temp_min } = dayData.main;
+          const { temp_max, temp_min } = dayData.main; // Use 'temp_max' and 'temp_min'
           const forecastDate = new Date(dayData.dt * 1000); // Convert seconds to milliseconds
           const dayName = index === 0 ? 'Tomorrow' : dayNames[(currentDay + index) % 7];
           const weatherDescription = dayData.weather[0].description;
@@ -56,9 +56,14 @@ function Right({ weatherData, forecastData }) {
               <p>{dayName}</p>
               <img src={`https://openweathermap.org/img/wn/${dayData.weather[0].icon}.png`} alt={dayData.weather[0].description} />
               <div className='temperature-info'>
-                <p>Max: {temp_max.toFixed(0)}°C</p>
-                <p>Min: {temp_min.toFixed(0)}°C</p>
+                <div>
+                  <p>Max: {temp_max.toFixed(0)}°C</p>
+                </div>
+                <div>
+                  <p>Min: {temp_min.toFixed(0)}°C</p>
+                </div>
               </div>
+
             </div>
           );
         })}
